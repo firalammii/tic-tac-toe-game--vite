@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
+import { context } from "./ContextProvider";
 
-const Cell = () => {
+const Cell = ({ mark, id }) => {
+
+    const { conqourCell } = useContext(context);
+
     return (
-        <div className="cell">
-            
+        <div className="cell" onClick={() => !mark && conqourCell(id)}>
+            {mark}
         </div>
     );
 

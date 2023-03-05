@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ContextProvider } from './components/ContextProvider';
 
 import Board from './components/Board';
 
-function App() {
-
-
+function App () {
   return (
     <div className="App">
-      <Board />
-
+      <ContextProvider>
+        <Board />
+      </ContextProvider>
     </div>
   )
 }
