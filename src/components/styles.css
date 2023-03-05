@@ -1,0 +1,124 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin:40px;
+    font-family: 'Roboto', sans-serif;
+    display: grid;
+    place-items: center;
+    background-color: #282c34;
+}
+.App{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.game-board,
+.cell{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.game-board{
+    padding: 2em;
+    background-color: rgb(58, 77, 172);
+    
+}
+h2{
+    color: whitesmoke;
+}
+.game-board,
+.inner-board {
+    width: fit-content;
+    border: 4px solid goldenrod;
+    border-radius: .5em;
+    /* position: relative; */
+}
+.inner-board{
+    display: grid;
+    grid-template: auto auto auto / auto auto auto;
+    padding: 1px;
+    margin-bottom: .5em;
+}
+.cell {
+    font-size: 4rem;
+    font-weight: 800;
+    width: 100px;
+    height: 100px;
+    border: 2px solid rgb(37, 76, 184);
+    background-color: rgb(184, 211, 202);
+    cursor: pointer;
+}
+button{
+    margin:1em;
+    padding: .5em 1em;
+    border:none;
+    border-radius: .25em;
+    font-size: 1rem;
+    font-weight: 800;
+}
+.slider{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    margin: 0;
+    font-size: 1.25rem;
+    color: rgb(44, 65, 174);
+    cursor: pointer;
+    
+}
+.slider-tube{
+    display: flex;
+    width: 50px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgb(209, 223, 223);
+}
+.slider-circle{
+    width:20px;
+    height: 20px;
+    background-color: rgb(21, 0, 255);
+    border-radius: 50%;
+}
+.his-turn{
+    color: whitesmoke;
+    font-weight: 800;
+}
+.slide-right{
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgb(21, 0, 255);
+}
+.hide{
+    display: none;
+}
+.disabled{
+    margin-top: 5em;
+}
+.modal-container{
+    position: relative;
+}
+.modal{
+    width: 310px;
+    height: 320px;
+    color: whitesmoke;
+    background-color: rgb(14, 14, 55);
+    border-radius: .5em;
+    display: grid;
+    place-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin:auto;
+}
+span{
+    font-weight: 900;
+    font-size: 1.25rem;
+}
