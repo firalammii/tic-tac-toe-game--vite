@@ -18,14 +18,11 @@ const ContextProvider = ({ children }) => {
     ];
 
     useEffect(() => {
-        console.log(Xturn);
         if (singleGameMode && !Xturn) {
-            console.log(cells, Xturn);
-
             palyerMark = Xturn ? "X" : "O";
             let randomIndex = 4;
             const cellsCopy = cells;
-            while (cellsCopy[randomIndex]) {
+            while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
                 randomIndex = Math.floor(Math.random() * 9);
             }
             if (!cellsCopy[randomIndex]) {
@@ -33,10 +30,7 @@ const ContextProvider = ({ children }) => {
                 setCells(cellsCopy);
                 setXturn(true);
             }
-
         }
-
-
         if (cells.filter(e => e).length > 4) {
             const a = winArray.map(ewaElem => ewaElem.map(i => cells[i]))
                 .filter(eb => ((eb[0] && eb[1] && eb[2]) && (eb[0] === eb[1] &&
@@ -48,15 +42,16 @@ const ContextProvider = ({ children }) => {
             }
             else if (cells.filter(e => e).length === 9 && !winFound.found) {
                 setWinFound({ winner: "XO", found: true });
-                setRender(true)
+                setRender(true);
             }
         }
+
+
+
 
     }, [cells, singleGameMode]);
 
     function handleTurn () {
-        // if (singleGameMode)
-        //     setXturn(false);
         setXturn(prev => !prev);
     }
     function handleGameMode () {
@@ -71,26 +66,18 @@ const ContextProvider = ({ children }) => {
         setRender(prev => !prev);
     }
 
-
     function conqourCell (i) {
         if (!winFound.found) {
             palyerMark = Xturn ? "X" : "O";
-            // const nCells = cells;
-            // nCells[i] = palyerMark;
             const nCells = [...cells.slice(0, i), palyerMark, ...cells.slice(i + 1)];
             setCells(nCells);
             handleTurn();
-
-
         }
-
     }
-    console.log(cells, Xturn, palyerMark)
-
 
     function reset () {
         setGameDisabled(true);
-        setSingleGameMode(false)
+        // setSingleGameMode(false)
         setXturn(true);
         setWinFound({ winner: "", found: false });
         setCells(Array(9).fill(""));
