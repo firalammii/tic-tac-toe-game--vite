@@ -9,7 +9,7 @@ const Board = () => {
 
     return (
         <div className="game-board">
-            <h1>Tic-Tac-Toe Game</h1>
+            <h1>Tic Tac Toe Game</h1>
             <div className="modal-container">
                 <div className="inner-board">
                     {cells.map((e, i) => (
@@ -28,14 +28,14 @@ const Board = () => {
                     className={`${gameDisabled && !winFound.found ? "modal" : "hide"}`}
                     onClick={toggleDisabled}
                 >
-                    <p> click <span>START</span> to play</p>
+                    <h2> click <span>"start"</span> to play</h2>
                 </div>
 
                 <div
                     className={`winner ${renderModal ? "modal" : "hide"} ${renderModal && "hide"} `}
                     onClick={toggleRenderModal}
                 >
-                    <h1>PLAYER " {winFound.winner} " THE CONQOERER!!</h1>
+                    <h1>{winFound.winner == "XO" ? "DRAW!!" : `PLAYER " ${winFound.winner} " THE CONQOERER!!`}</h1>
                 </div>
             </div>
         </div>

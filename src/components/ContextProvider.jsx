@@ -23,7 +23,12 @@ const ContextProvider = ({ children }) => {
             /* ********************************************* */
             if (a.length === 3) {
                 setWinFound({ winner: a[0], found: true });
-                toggleRenderModal();
+                setRender(true);
+                // toggleRenderModal();
+            }
+            else if (cells.filter(e => e).length === 9 && !winFound.found) {
+                setWinFound({ winner: "XO", found: true });
+                setRender(true)
             }
         }
     }, [cells]);
