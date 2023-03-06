@@ -25,8 +25,9 @@ body{
     padding: 4.5em;
     background-color: rgb(58, 77, 172);
 }
-h2{
+h1{
     color: whitesmoke;
+    /* margin: 0; */
 }
 .game-board,
 .inner-board {
@@ -109,7 +110,7 @@ p{
     font-size: smaller;
 }
 .disabled{
-    margin-top: 4.6em auto;
+    margin-top: 4.6em;
     text-align: center;
 }
 .modal-container{

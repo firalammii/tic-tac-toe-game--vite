@@ -5,19 +5,16 @@ const Slider = () => {
 
     const { gameDisabled, Xturn, toggleDisabled, winFound, reset }
         = useContext(context);
-    const { winner, found } = winFound;
+    const { found } = winFound;
 
     return (
         <div className="root-slider-container">
             {
                 found ?
-                    <div className="disabled" onClick={reset}>
-                        <h2>player {winner} Dominated</h2>
-
+                    <div className="" onClick={reset}>
                         <button className="disabled" onClick={reset}>
                             {gameDisabled ? "Start" : "New Game"}
                         </button>
-
                     </div>
                     :
                     <>

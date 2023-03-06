@@ -9,7 +9,7 @@ const Board = () => {
 
     return (
         <div className="game-board">
-            <h2>Tic-Tac-Toe Game</h2>
+            <h1>Tic-Tac-Toe Game</h1>
             <div className="modal-container">
                 <div className="inner-board">
                     {cells.map((e, i) => (
