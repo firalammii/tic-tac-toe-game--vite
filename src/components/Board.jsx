@@ -28,7 +28,7 @@ const Board = () => {
                     className={`${gameDisabled && !winFound.found ? "modal" : "hide"}`}
                     onClick={toggleDisabled}
                 >
-                    <p> click <span>New Game</span> to play</p>
+                    <p> click <span>START</span> to play</p>
                 </div>
 
                 <div
