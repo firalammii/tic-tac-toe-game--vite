@@ -6,7 +6,7 @@ const Modals = () => {
         toggleRenderModal, handleGameMode, singleGameMode
     } = useContext(context);
     const { winner, found } = winFound;
-    const player = singleGameMode ? (found && winner === "X") ? "YOU" : "COMPUTER" : `PLAYER ${winner}`;
+    const player = singleGameMode ? (found && winner === "X") ? "YOU" : "COMPUTER" : `PLAYER "${winner}"`;
     return (
         <div>
             <div className={`${gameDisabled && !found ? "modal" : "hide"}`}>
@@ -28,7 +28,7 @@ const Modals = () => {
                 className={`winner ${renderModal ? "modal" : "hide"} ${renderModal && "hide"} `}
                 onClick={toggleRenderModal}
             >
-                <h1>{winner == "XO" ? "DRAW!!" : ` " ${player} " : THE CONQOERER!!`}</h1>
+                <h1>{winner == "XO" ? "DRAW!!" : ` ${player} : THE CONQOERER!!`}</h1>
             </div>
         </div>
     );
