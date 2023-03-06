@@ -28,7 +28,7 @@ const Modals = () => {
                 className={`winner ${renderModal ? "modal" : "hide"} ${renderModal && "hide"} `}
                 onClick={toggleRenderModal}
             >
-                <Confetti width="310px" />
+                {player !== "☠️COMPUTER ☠️" && <Confetti width="310px" />}
                 <h1>{winner == "XO" ? "DRAW!!" : ` ${player} THE CONQOERER!!`}</h1>
             </div>
         </div>
