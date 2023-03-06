@@ -6,7 +6,7 @@ const ContextProvider = ({ children }) => {
     const [gameDisabled, setGameDisabled] = useState(true);
     const [Xturn, setXturn] = useState(true);
     const [winFound, setWinFound] = useState({ winner: "", found: false });
-    const [renderModal, setRender] = useState(winFound.found);
+    const [renderModal, setRender] = useState(false);
     const [cells, setCells] = useState(Array(9).fill(""));
 
     const winArray = [
@@ -14,7 +14,6 @@ const ContextProvider = ({ children }) => {
         [0, 4, 8], [2, 4, 6],
         [0, 3, 6], [1, 4, 7], [2, 5, 8]
     ];
-
 
     useEffect(() => {
         if (cells.filter(e => e).length > 4) {
@@ -50,9 +49,6 @@ const ContextProvider = ({ children }) => {
             setCells(nCells);
             handleTurn();
         }
-        else {
-            // setCells
-        }
 
     }
     function reset () {
@@ -60,6 +56,7 @@ const ContextProvider = ({ children }) => {
         setXturn(true);
         setWinFound({ winner: "", found: false });
         setCells(Array(9).fill(""));
+        setRender(false)
     }
 
     return (

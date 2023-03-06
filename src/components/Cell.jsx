@@ -3,19 +3,15 @@ import { context } from "./ContextProvider";
 
 const Cell = ({ mark, id }) => {
 
-    const { conqourCell, winFound, renderModal, toggleRenderModal } = useContext(context);
-    function decideOnClick (id) {
-        console.log(renderModal);
-        console.log(mark);
-        if (renderModal) {
+    const { conqourCell, winFound, toggleRenderModal } = useContext(context);
 
+    function decideOnClick (id) {
+        if (winFound.found) {
             toggleRenderModal();
         }
-        else if (mark) {
-            console.log(id);
+        else {
             !mark && conqourCell(id);
         }
-        else { toggleRenderModal; }
     }
 
     return (
