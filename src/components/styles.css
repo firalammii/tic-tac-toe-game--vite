@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 body{
-    margin:40px;
+    margin:auto;
     font-family: 'Roboto', sans-serif;
     display: grid;
     place-items: center;
@@ -13,7 +13,9 @@ body{
 .game-board,
 .cell,
 .root-slider-container,
-.slider{
+.slider,
+.player-mode-btn-container,
+.initial-modal{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,20 +24,43 @@ body{
 
 
 .game-board,
-.cell{
+.cell,
+.initial-modal
+{
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
+h2{
+    margin: 0;
+    font-size: 1.8rem;
+}
+.initial-modal{
+/* flex-direction: column; */
+gap: 1.5em;
+}
+.player-mode-btn-container{
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+/* .player-mode-btn-container{
+    gap: .5em;
+} */
 
 .game-board{
     padding: 4.5em;
     background-color: rgb(58, 77, 172);
 }
 
-h1, span{
-    font-size: 2.2rem;
+h1,h2, span, p{
     color: whitesmoke;
     text-shadow: 2px 2px 4px black;
+}
+h1{
+    font-size: 2.2rem;
+}
+.game-board>p{
+    margin-bottom: .5em;
 }
 .game-board,
 .inner-board {
@@ -58,7 +83,7 @@ h1, span{
     background-color: rgb(184, 211, 202);
     cursor: pointer;
 }
-button{
+.button{
     width: 120px;
     margin:1em;
     padding: .5em 1em;
@@ -66,7 +91,17 @@ button{
     border-radius: .25em;
     font-size: 1rem;
     font-weight: 800;
+    cursor: pointer;
 }
+.button:hover{
+    background-color: rgb(7, 104, 239);
+    color: white;
+    text-shadow: 2px 2px 4px black;
+}
+.player-mode-btn{
+    background-color: white;
+}
+
 .root-slider-container,
 .slider{
     gap: .5em;
@@ -119,6 +154,7 @@ p{
 }
 .modal-container{
     position: relative;
+    flex-direction: column;
     margin:0;
 }
 .modal{
@@ -156,4 +192,7 @@ p{
 }
 .rest{
     font-size: 5px;
+}
+.player-mode-btn{
+    margin: 0 auto;
 }

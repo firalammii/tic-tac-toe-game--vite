@@ -4,9 +4,10 @@ import { context } from "./ContextProvider";
 const Cell = ({ mark, id }) => {
 
     const { conqourCell, winFound, toggleRenderModal } = useContext(context);
+    const { found } = winFound;
 
     function decideOnClick (id) {
-        if (winFound.found) {
+        if (found) {
             toggleRenderModal();
         }
         else {
@@ -16,7 +17,7 @@ const Cell = ({ mark, id }) => {
 
     return (
         <div
-            className={`cell ${mark && "not-allowed"} ${winFound.found && "win"}`}
+            className={`cell ${mark && "not-allowed"} ${found && "win"}`}
             onClick={() => decideOnClick(id)}
         >
             {mark}
