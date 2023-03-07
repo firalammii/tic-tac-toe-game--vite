@@ -3,7 +3,7 @@ import { context } from "./ContextProvider";
 
 const Cell = ({ mark, id }) => {
 
-    const { conqourCell, winFound, toggleRenderModal } = useContext(context);
+    const { conqourCell, winFound, toggleRenderModal, updateXmoves } = useContext(context);
     const { found } = winFound;
 
     function decideOnClick (id) {
@@ -11,6 +11,7 @@ const Cell = ({ mark, id }) => {
             toggleRenderModal();
         }
         else {
+            updateXmoves(id)
             !mark && conqourCell(id);
         }
     }

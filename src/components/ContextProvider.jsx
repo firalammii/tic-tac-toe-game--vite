@@ -1,3 +1,4 @@
+import { getGoodMove } from './utils';
 import React, { createContext, useEffect, useState } from 'react';
 const context = createContext();
 
@@ -9,6 +10,8 @@ const ContextProvider = ({ children }) => {
     const [winFound, setWinFound] = useState({ winner: "", found: false });
     const [renderModal, setRender] = useState(false);
     const [cells, setCells] = useState(Array(9).fill(""));
+    const [Xmoves, setXmoves] = useState([]);
+    // const [moveHistory, setMoveHistory] = useState([]);
 
     let palyerMark = Xturn ? "X" : "O";
     const winArray = [
@@ -18,19 +21,6 @@ const ContextProvider = ({ children }) => {
     ];
 
     useEffect(() => {
-        if (singleGameMode && !Xturn) {
-            palyerMark = Xturn ? "X" : "O";
-            let randomIndex = 4;
-            const cellsCopy = cells;
-            while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
-                randomIndex = Math.floor(Math.random() * 9);
-            }
-            if (!cellsCopy[randomIndex]) {
-                cellsCopy[randomIndex] = palyerMark;
-                setCells(cellsCopy);
-                setXturn(true);
-            }
-        }
         if (cells.filter(e => e).length > 4) {
             const a = winArray.map(ewaElem => ewaElem.map(i => cells[i]))
                 .filter(eb => ((eb[0] && eb[1] && eb[2]) && (eb[0] === eb[1] &&
@@ -45,11 +35,32 @@ const ContextProvider = ({ children }) => {
                 setRender(true);
             }
         }
+        singleModePlayer();
+        async function singleModePlayer () {
+
+            if (singleGameMode && !Xturn) {
+                palyerMark = Xturn ? "X" : "O";
+
+                let randomIndex = getGoodMove(Xmoves[0], cells);
+
+                const cellsCopy = cells;
+                while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
+                    randomIndex = getGoodMove(Xmoves[0], cells);
+                    console.log(randomIndex);
+                }
+
+                if (!cellsCopy[randomIndex]) {
+                    cellsCopy[randomIndex] = palyerMark;
+                    setCells(cellsCopy);
+                    setXturn(true);
+                }
+            }
+        }
+
+    }, [cells, singleGameMode, Xturn]);
 
 
 
-
-    }, [cells, singleGameMode]);
 
     function handleTurn () {
         setXturn(prev => !prev);
@@ -66,22 +77,37 @@ const ContextProvider = ({ children }) => {
         setRender(prev => !prev);
     }
 
+    function updateXmoves (i) {
+        setXmoves([i, ...Xmoves]);
+    }
+
+
     function conqourCell (i) {
         if (!winFound.found) {
             palyerMark = Xturn ? "X" : "O";
+            setXmoves([i, ...Xmoves])
             const nCells = [...cells.slice(0, i), palyerMark, ...cells.slice(i + 1)];
             setCells(nCells);
             handleTurn();
+
+            // setMoveHistory([...moveHistory, { mark: palyerMark, index: i }])
         }
     }
 
-    function reset () {
-        setGameDisabled(true);
-        // setSingleGameMode(false)
+    function restart () {
         setXturn(true);
         setWinFound({ winner: "", found: false });
         setCells(Array(9).fill(""));
-        setRender(false)
+        setRender(false);
+        setXmoves([]);
+    }
+    function newGame () {
+        setGameDisabled(true);
+        setXturn(true);
+        setWinFound({ winner: "", found: false });
+        setCells(Array(9).fill(""));
+        setRender(false);
+        setXmoves([]);
     }
 
     return (
@@ -90,7 +116,7 @@ const ContextProvider = ({ children }) => {
                 {
                     gameDisabled, toggleDisabled, cells, conqourCell,
                     Xturn, winFound, toggleRenderModal, renderModal,
-                    singleGameMode, handleGameMode, reset
+                    singleGameMode, handleGameMode, updateXmoves, newGame, restart
                 }
             }
         >

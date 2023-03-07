@@ -28,14 +28,12 @@ body{
 .initial-modal
 {
     flex-direction: column;
-    /* align-items: center; */
 }
 h2{
     margin: 0;
     font-size: 1.8rem;
 }
 .initial-modal{
-/* flex-direction: column; */
 gap: 1.5em;
 }
 .player-mode-btn-container{
@@ -43,9 +41,6 @@ gap: 1.5em;
     flex-direction: column;
     gap: .5em;
 }
-/* .player-mode-btn-container{
-    gap: .5em;
-} */
 
 .game-board{
     padding: 4.5em;
@@ -195,4 +190,7 @@ p{
 }
 .player-mode-btn{
     margin: 0 auto;
+}
+.newgame{
+    margin:0 auto;
 }
