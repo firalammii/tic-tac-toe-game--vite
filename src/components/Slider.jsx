@@ -5,7 +5,7 @@ const Slider = () => {
 
     const {
         gameDisabled, Xturn, toggleDisabled,
-        winFound, singleGameMode, newGame, restart
+        winFound, singleGameMode, newGame, newGame2, continueGame
     } = useContext(context);
     const { found } = winFound;
 
@@ -13,9 +13,12 @@ const Slider = () => {
         <div className="root-slider-container">
             {
                 found ?
-                    <div className="" onClick={newGame}>
-                        <button className="button disabled" onClick={newGame}>
-                            {gameDisabled ? "Start" : "New Game"}
+                    <div className="" >
+                        <button id='continue' className="button disabled" onClick={continueGame}>
+                            Continue
+                        </button>
+                        <button id='newgame' className="button disabled" onClick={newGame2}>
+                            New Game
                         </button>
                     </div>
                     :
@@ -37,7 +40,7 @@ const Slider = () => {
 
                         <button
                             className={`button ${gameDisabled && "disabled"}`}
-                            onClick={gameDisabled ? toggleDisabled : restart}
+                            onClick={gameDisabled ? toggleDisabled : continueGame}
                         >
                             {gameDisabled ? "Start" : "Restart"}
                         </button>
@@ -45,7 +48,7 @@ const Slider = () => {
                             className={`button ${gameDisabled && "newgame"}`}
                             onClick={gameDisabled ? toggleDisabled : newGame}
                         >
-                            {gameDisabled ? "Start" : "New Game"}
+                            New Game
                         </button>}
                     </>
             }

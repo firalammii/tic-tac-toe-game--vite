@@ -7,7 +7,7 @@ const ContextProvider = ({ children }) => {
     const [gameDisabled, setGameDisabled] = useState(true);
     const [Xturn, setXturn] = useState(true);
     const [singleGameMode, setSingleGameMode] = useState(false);
-    const [winFound, setWinFound] = useState({ winner: "", found: false });
+    const [winFound, setWinFound] = useState({ winner: "", found: false, winCount: 0 });
     const [renderModal, setRender] = useState(false);
     const [cells, setCells] = useState(Array(9).fill(""));
     const [Xmoves, setXmoves] = useState([]);
@@ -21,21 +21,29 @@ const ContextProvider = ({ children }) => {
     ];
 
     useEffect(() => {
-        if (cells.filter(e => e).length > 4) {
-            const a = winArray.map(ewaElem => ewaElem.map(i => cells[i]))
-                .filter(eb => ((eb[0] && eb[1] && eb[2]) && (eb[0] === eb[1] &&
-                    eb[2] === eb[0]))).flat();
-            /* ********************************************* */
-            if (a.length === 3) {
-                setWinFound({ winner: a[0], found: true });
-                setRender(true);
-            }
-            else if (cells.filter(e => e).length === 9 && !winFound.found) {
-                setWinFound({ winner: "XO", found: true });
-                setRender(true);
+        if (!winFound.found) {
+            if (cells.filter(e => e).length > 4) {
+                const a = winArray.map(ewaElem => ewaElem.map(i => cells[i]))
+                    .filter(eb => ((eb[0] && eb[1] && eb[2]) && (eb[0] === eb[1] &&
+                        eb[2] === eb[0]))).flat();
+                /* ********************************************* */
+                if (a.length === 3) {
+                    const count = a[0] === 'X' ? winFound.winCount + 3 : winFound.winCount - 5;
+                    setWinFound({ winner: a[0], found: true, winCount: count });
+                    setRender(true);
+                }
+                else if (cells.filter(e => e).length === 9 && !winFound.found) {
+                    const count = winFound.winCount === 0 ? winFound.winCount - 10 : winFound.winCount - 3;
+                    setWinFound({ winner: "XO", found: true, winCount: count });
+                    setRender(true);
+                }
             }
         }
-        singleModePlayer();
+        console.log(winFound.winCount);
+
+        if (!winFound.found)
+            singleModePlayer();
+
         async function singleModePlayer () {
 
             if (singleGameMode && !Xturn) {
@@ -46,7 +54,6 @@ const ContextProvider = ({ children }) => {
                 const cellsCopy = cells;
                 while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
                     randomIndex = getGoodMove(Xmoves[0], cells);
-                    console.log(randomIndex);
                 }
 
                 if (!cellsCopy[randomIndex]) {
@@ -95,8 +102,16 @@ const ContextProvider = ({ children }) => {
     }
 
     function restart () {
+        setGameDisabled(true);
         setXturn(true);
-        setWinFound({ winner: "", found: false });
+        setWinFound({ ...winFound, winner: "", found: false });
+        setCells(Array(9).fill(""));
+        setRender(false);
+        setXmoves([]);
+    }
+    function continueGame () {
+        setXturn(true);
+        setWinFound({ ...winFound, winner: "", found: false });
         setCells(Array(9).fill(""));
         setRender(false);
         setXmoves([]);
@@ -104,7 +119,14 @@ const ContextProvider = ({ children }) => {
     function newGame () {
         setGameDisabled(true);
         setXturn(true);
-        setWinFound({ winner: "", found: false });
+        setWinFound({ winner: "", found: false, winCount: 0 });
+        setCells(Array(9).fill(""));
+        setRender(false);
+        setXmoves([]);
+    }
+    function newGame2 () {
+        setXturn(true);
+        setWinFound({ winner: "", found: false, winCount: 0 });
         setCells(Array(9).fill(""));
         setRender(false);
         setXmoves([]);
@@ -116,7 +138,8 @@ const ContextProvider = ({ children }) => {
                 {
                     gameDisabled, toggleDisabled, cells, conqourCell,
                     Xturn, winFound, toggleRenderModal, renderModal,
-                    singleGameMode, handleGameMode, updateXmoves, newGame, restart
+                    singleGameMode, handleGameMode, updateXmoves, newGame,
+                    restart, continueGame, newGame2
                 }
             }
         >

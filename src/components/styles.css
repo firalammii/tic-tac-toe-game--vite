@@ -194,3 +194,24 @@ p{
 .newgame{
     margin:0 auto;
 }
+.singleGameMode{
+    padding: 0 15px;
+    width: 310px;
+    display: flex;
+    align-items: center;
+}
+.score{
+    margin-left: auto;
+}
+.singleGameMode p{
+    font-size: 1.2em;
+}
+.red{
+    color: crimson;
+}
+.yellow{
+    color: yellow;
+}
+.green{
+    color: green;
+}
