@@ -1,4 +1,4 @@
-import { getGoodMove } from './utils';
+import computer from './utils';
 import React, { createContext, useEffect, useState } from 'react';
 const context = createContext();
 
@@ -7,11 +7,11 @@ const ContextProvider = ({ children }) => {
     const [gameDisabled, setGameDisabled] = useState(true);
     const [Xturn, setXturn] = useState(true);
     const [singleGameMode, setSingleGameMode] = useState(false);
-    const [winFound, setWinFound] = useState({ winner: "", found: false, winCount: 0 });
+    const [winFound, setWinFound] = useState({ winner: "", found: false, score: 0 });
     const [renderModal, setRender] = useState(false);
     const [cells, setCells] = useState(Array(9).fill(""));
     const [Xmoves, setXmoves] = useState([]);
-    // const [moveHistory, setMoveHistory] = useState([]);
+    const [Omoves, setOmoves] = useState([]);
 
     let palyerMark = Xturn ? "X" : "O";
     const winArray = [
@@ -28,35 +28,35 @@ const ContextProvider = ({ children }) => {
                         eb[2] === eb[0]))).flat();
                 /* ********************************************* */
                 if (a.length === 3) {
-                    const count = a[0] === 'X' ? winFound.winCount + 3 : winFound.winCount - 5;
-                    setWinFound({ winner: a[0], found: true, winCount: count });
+                    const count = a[0] === 'X' ? winFound.score + 5 : winFound.score - 8;
+                    setWinFound({ winner: a[0], found: true, score: count });
                     setRender(true);
                 }
                 else if (cells.filter(e => e).length === 9 && !winFound.found) {
-                    const count = winFound.winCount === 0 ? winFound.winCount - 10 : winFound.winCount - 3;
-                    setWinFound({ winner: "XO", found: true, winCount: count });
+                    const count = winFound.score === 0 ? winFound.score - 10 : winFound.score - 4;
+                    setWinFound({ winner: "XO", found: true, score: count });
                     setRender(true);
                 }
             }
         }
-        console.log(winFound.winCount);
-
-        if (!winFound.found)
-            singleModePlayer();
-
+        // const Omoves = cells.map((eo, i) => i).filter(ei => cells[ei] === 'O');
+        if (!winFound.found) {
+            setTimeout(singleModePlayer, 1500);
+        }
         async function singleModePlayer () {
 
             if (singleGameMode && !Xturn) {
                 palyerMark = Xturn ? "X" : "O";
 
-                let randomIndex = getGoodMove(Xmoves[0], cells);
+                let randomIndex = computer(winFound.score, cells);
 
                 const cellsCopy = cells;
                 while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
-                    randomIndex = getGoodMove(Xmoves[0], cells);
+                    randomIndex = computer(winFound.score, cells);
                 }
 
                 if (!cellsCopy[randomIndex]) {
+                    setXmoves([randomIndex, ...Omoves])
                     cellsCopy[randomIndex] = palyerMark;
                     setCells(cellsCopy);
                     setXturn(true);
@@ -65,8 +65,6 @@ const ContextProvider = ({ children }) => {
         }
 
     }, [cells, singleGameMode, Xturn]);
-
-
 
 
     function handleTurn () {
@@ -96,8 +94,6 @@ const ContextProvider = ({ children }) => {
             const nCells = [...cells.slice(0, i), palyerMark, ...cells.slice(i + 1)];
             setCells(nCells);
             handleTurn();
-
-            // setMoveHistory([...moveHistory, { mark: palyerMark, index: i }])
         }
     }
 
@@ -108,6 +104,7 @@ const ContextProvider = ({ children }) => {
         setCells(Array(9).fill(""));
         setRender(false);
         setXmoves([]);
+        setOmoves([]);
     }
     function continueGame () {
         setXturn(true);
@@ -115,21 +112,23 @@ const ContextProvider = ({ children }) => {
         setCells(Array(9).fill(""));
         setRender(false);
         setXmoves([]);
+        setOmoves([]);
     }
     function newGame () {
         setGameDisabled(true);
         setXturn(true);
-        setWinFound({ winner: "", found: false, winCount: 0 });
+        setWinFound({ winner: "", found: false, score: 0 });
         setCells(Array(9).fill(""));
         setRender(false);
         setXmoves([]);
+        setOmoves([]);
     }
     function newGame2 () {
         setXturn(true);
-        setWinFound({ winner: "", found: false, winCount: 0 });
+        setWinFound({ winner: "", found: false, score: 0 });
         setCells(Array(9).fill(""));
         setRender(false);
-        setXmoves([]);
+        setOmoves([]);
     }
 
     return (

@@ -7,7 +7,7 @@ import Modals from "./Modals";
 
 const Board = () => {
     const { cells, singleGameMode, winFound } = useContext(context);
-    const { winCount } = winFound;
+    const { score } = winFound;
     return (
         <div className="game-board">
             <h1>Tic Tac Toe Game</h1>
@@ -15,7 +15,7 @@ const Board = () => {
                 singleGameMode ?
                     <div className="singleGameMode">
                         <p>Single Player</p>
-                        <p className={`score ${winCount < 0 ? 'red' : winCount < 6 ? 'yellow' : 'green'}`}>score: {winCount}</p>
+                        <p className={`score ${score < 10 ? 'red' : score < 15 ? 'yellow' : 'green'}`}>score: {score}</p>
                     </div>
                     :
                     <p>Dual Player Mode</p>
