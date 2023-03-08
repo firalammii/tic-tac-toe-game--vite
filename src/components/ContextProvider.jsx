@@ -41,7 +41,7 @@ const ContextProvider = ({ children }) => {
         }
         // const Omoves = cells.map((eo, i) => i).filter(ei => cells[ei] === 'O');
         if (!winFound.found) {
-            setTimeout(singleModePlayer, 1500);
+            setTimeout(singleModePlayer, 500);
         }
         async function singleModePlayer () {
 
