@@ -107,7 +107,7 @@ h1{
     
 }
 p{
-    margin:0;
+    margin-bottom: .5em;
     cursor:not-allowed;
 }
 .root-slider-container{
@@ -131,7 +131,7 @@ p{
 }
 .his-turn{
     color: whitesmoke;
-    font-size: 2.5rem;
+    /* font-size: 2.5rem; */
 }
 .slide-right{
     width: 100%;
@@ -139,12 +139,9 @@ p{
     border-radius: 10px;
     background-color: rgb(21, 0, 255);
 }
-.hide{
-    display: none;
-    font-size: smaller;
-}
+
 .disabled{
-    margin-top: 4.6em;
+    /* margin-top: 4.6em; */
     text-align: center;
 }
 .modal-container{
@@ -200,12 +197,14 @@ p{
     display: flex;
     align-items: center;
 }
+.hide{
+    display: none;
+    font-size: smaller;
+}
 .score{
     margin-left: auto;
 }
-.singleGameMode p{
-    font-size: 1.2em;
-}
+
 .red{
     color: crimson;
 }
@@ -215,3 +214,15 @@ p{
 .green{
     color: green;
 }
+
+<div className={`slider  ${gameDisabled && "hide"}`}>
+                                    <p className={`${Xturn ? "his-turn" : "rest"}`}> player: X</p>
+                                    <div className="slider-tube">
+                                        <div className={`${!Xturn ? "slider-circle slide-right" : "slider-circle"} `} ></div>
+                                    </div>
+                                    <p className={` ${!Xturn ? "his-turn" : "rest"}`}>  player: O</p>
+                                </div>
+                                :
+                                <div className={`slider  ${gameDisabled && "hide"}`}>
+                                    <p className="his-turn"> player: X</p>
+                                </div>
