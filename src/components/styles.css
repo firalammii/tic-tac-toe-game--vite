@@ -21,7 +21,9 @@ body{
     justify-content: center;
 
 }
-
+.slider p{
+    margin: 0;
+}
 
 .game-board,
 .cell,
@@ -43,7 +45,8 @@ gap: 1.5em;
 }
 
 .game-board{
-    padding: 4.5em;
+    height: 100vh;
+    padding: 4em;
     background-color: rgb(58, 77, 172);
 }
 
@@ -59,11 +62,12 @@ h1{
 }
 .game-board,
 .inner-board {
-    width: fit-content;
+    
     border: 4px solid goldenrod;
     border-radius: .5em;
 }
 .inner-board{
+    width: 310px;
     display: grid;
     grid-template: auto auto auto / auto auto auto;
     padding: 1px;
@@ -103,7 +107,7 @@ h1{
     margin: 0 auto;
     color: rgb(44, 65, 174);
     font-weight: 900;
-    font-size: 1.3em;
+    font-size: 1.2em;
     
 }
 p{
@@ -121,7 +125,7 @@ p{
     height: 20px;
     border-radius: 10px;
     background-color: rgb(209, 223, 223);
-    cursor: pointer;
+    cursor: not-allowed;
 }
 .slider-circle{
     width:20px;
@@ -141,7 +145,7 @@ p{
 }
 
 .disabled{
-    /* margin-top: 4.6em; */
+    margin-top: 2.6em;
     text-align: center;
 }
 .modal-container{
@@ -214,15 +218,3 @@ p{
 .green{
     color: green;
 }
-
-<div className={`slider  ${gameDisabled && "hide"}`}>
-                                    <p className={`${Xturn ? "his-turn" : "rest"}`}> player: X</p>
-                                    <div className="slider-tube">
-                                        <div className={`${!Xturn ? "slider-circle slide-right" : "slider-circle"} `} ></div>
-                                    </div>
-                                    <p className={` ${!Xturn ? "his-turn" : "rest"}`}>  player: O</p>
-                                </div>
-                                :
-                                <div className={`slider  ${gameDisabled && "hide"}`}>
-                                    <p className="his-turn"> player: X</p>
-                                </div>

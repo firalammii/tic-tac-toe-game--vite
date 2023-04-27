@@ -8,13 +8,15 @@ const Cell = ({ mark, id }) => {
 
     function decideOnClick (id) {
         if (found) {
-            toggleRenderModal();
+            // toggleRenderModal();
         }
         else {
-            updateXmoves(id)
+            // !mark && updateXmoves(id);
             !mark && conqourCell(id);
         }
     }
+
+    console.log(found)
 
     return (
         <div

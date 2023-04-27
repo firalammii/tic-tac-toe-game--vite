@@ -8,11 +8,11 @@ const ContextProvider = ({ children }) => {
     const [Xturn, setXturn] = useState(true);
     const [singleGameMode, setSingleGameMode] = useState(false);
     const [winFound, setWinFound] = useState({ winner: "", found: false, score: 0 });
-    const [renderModal, setRender] = useState(false);
     const [cells, setCells] = useState(Array(9).fill(""));
-    const [Xmoves, setXmoves] = useState([]);
+    // const [Xmoves, setXmoves] = useState([]);
     const [Omoves, setOmoves] = useState([]);
 
+    let Xmoves = "";
     let palyerMark = Xturn ? "X" : "O";
     const winArray = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -30,41 +30,20 @@ const ContextProvider = ({ children }) => {
                 if (a.length === 3) {
                     const count = a[0] === 'X' ? winFound.score + 5 : winFound.score - 8;
                     setWinFound({ winner: a[0], found: true, score: count });
-                    setRender(true);
                 }
                 else if (cells.filter(e => e).length === 9 && !winFound.found) {
                     const count = winFound.score === 0 ? winFound.score - 10 : winFound.score - 4;
                     setWinFound({ winner: "XO", found: true, score: count });
-                    setRender(true);
-                }
-            }
-        }
-        // const Omoves = cells.map((eo, i) => i).filter(ei => cells[ei] === 'O');
-        if (!winFound.found) {
-            setTimeout(singleModePlayer, 500);
-        }
-        async function singleModePlayer () {
-
-            if (singleGameMode && !Xturn) {
-                palyerMark = Xturn ? "X" : "O";
-
-                let randomIndex = computer(winFound.score, cells);
-
-                const cellsCopy = cells;
-                while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
-                    randomIndex = computer(winFound.score, cells);
-                }
-
-                if (!cellsCopy[randomIndex]) {
-                    setXmoves([randomIndex, ...Omoves])
-                    cellsCopy[randomIndex] = palyerMark;
-                    setCells(cellsCopy);
-                    setXturn(true);
                 }
             }
         }
 
-    }, [cells, singleGameMode, Xturn]);
+        if (!winFound.found && singleGameMode) {
+            // setTimeout(() => singleModePlayer(), 250);
+            singleModePlayer();
+        }
+
+    }, [cells]);
 
 
     function handleTurn () {
@@ -78,40 +57,61 @@ const ContextProvider = ({ children }) => {
         setGameDisabled(prev => !prev);
     }
 
-    function toggleRenderModal () {
-        setRender(prev => !prev);
-    }
 
-    function updateXmoves (i) {
-        setXmoves([i, ...Xmoves]);
-    }
+
+    // function updateXmoves (i) {
+    //     setXmoves([i, ...Xmoves]);
+    // }
 
 
     function conqourCell (i) {
         if (!winFound.found) {
             palyerMark = Xturn ? "X" : "O";
-            setXmoves([i, ...Xmoves])
+            // setXmoves([i, ...Xmoves])
+            Xmoves = i;
             const nCells = [...cells.slice(0, i), palyerMark, ...cells.slice(i + 1)];
             setCells(nCells);
             handleTurn();
+
+            // if (singleGameMode) {
+            //     setTimeout(() => singleModePlayer(), 500);
+            // }
         }
     }
 
+    function singleModePlayer () {
+        if (!winFound.found && singleGameMode && !Xturn) {
+            palyerMark = Xturn ? "X" : "O";
+            let randomIndex = computer(winFound.score, Xmoves, Omoves, cells);
+            const cellsCopy = cells;
+            while (cellsCopy[randomIndex] && (cells.filter(e => e).length !== 9)) {
+                randomIndex = computer(winFound.score, Xmoves, Omoves, cells);
+            }
+
+            if (!cellsCopy[randomIndex]) {
+
+                setOmoves([randomIndex, ...Omoves]);
+                cellsCopy[randomIndex] = palyerMark;
+                setCells(cellsCopy);
+                setXturn(true);
+
+                console.log(cells);
+            }
+        }
+    }
     function restart () {
         setGameDisabled(true);
         setXturn(true);
         setWinFound({ ...winFound, winner: "", found: false });
         setCells(Array(9).fill(""));
-        setRender(false);
-        setXmoves([]);
+        Xmoves = ""
         setOmoves([]);
     }
     function continueGame () {
         setXturn(true);
         setWinFound({ ...winFound, winner: "", found: false });
         setCells(Array(9).fill(""));
-        setRender(false);
-        setXmoves([]);
+        Xmoves = "";
         setOmoves([]);
     }
     function newGame () {
@@ -119,15 +119,13 @@ const ContextProvider = ({ children }) => {
         setXturn(true);
         setWinFound({ winner: "", found: false, score: 0 });
         setCells(Array(9).fill(""));
-        setRender(false);
-        setXmoves([]);
+        Xmoves = "";
         setOmoves([]);
     }
     function newGame2 () {
         setXturn(true);
         setWinFound({ winner: "", found: false, score: 0 });
         setCells(Array(9).fill(""));
-        setRender(false);
         setOmoves([]);
     }
 
@@ -136,8 +134,8 @@ const ContextProvider = ({ children }) => {
             value={
                 {
                     gameDisabled, toggleDisabled, cells, conqourCell,
-                    Xturn, winFound, toggleRenderModal, renderModal,
-                    singleGameMode, handleGameMode, updateXmoves, newGame,
+                    Xturn, winFound,
+                    singleGameMode, handleGameMode, newGame,
                     restart, continueGame, newGame2
                 }
             }

@@ -1,12 +1,20 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { context } from './ContextProvider';
 import Confetti from 'react-confetti';
 const Modals = () => {
-    const { gameDisabled, winFound, renderModal,
-        toggleRenderModal, handleGameMode, singleGameMode
+    const { gameDisabled, winFound, handleGameMode, singleGameMode
     } = useContext(context);
     const { winner, found } = winFound;
+    const [renderModal, setRender] = useState(found);
+
+    function toggleRenderModal () {
+        setRender(prev => !prev);
+    }
     const player = singleGameMode ? (found && winner === "X") ? "⭐️🌟 YOU 🌟⭐️" : "☠️ SADLY👀 I, ☠️" : `PLAYER 🌟${winner}🌟`;
+
+    console.log("found: " + found);
+    console.log("renderModal " + renderModal)
+
     return (
         <div>
             <div className={`${gameDisabled && !found ? "modal" : "hide"}`}>
@@ -24,13 +32,7 @@ const Modals = () => {
                 </div>
             </div>
 
-            <div
-                className={`winner ${renderModal ? "modal" : "hide"} ${renderModal && "hide"} `}
-                onClick={toggleRenderModal}
-            >
-                {player !== "☠️ SADLY👀 I, ☠️" && <Confetti width="310px" />}
-                <h1>{winner == "XO" ? "DRAW!!" : ` ${player} THE CONQOERER!!`}</h1>
-            </div>
+
         </div>
     );
 };

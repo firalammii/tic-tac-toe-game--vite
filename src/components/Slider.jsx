@@ -37,7 +37,7 @@ const Slider = () => {
                                     <p className="his-turn"> player: X</p>
                                 </div>
                         }
-
+                        <div>
                         <button
                             className={`button ${gameDisabled && "disabled"}`}
                             onClick={gameDisabled ? toggleDisabled : continueGame}
@@ -50,6 +50,7 @@ const Slider = () => {
                         >
                             New Game
                         </button>}
+                        </div>
                     </>
             }
 
